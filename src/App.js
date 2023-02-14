@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css"
+
+import Select from "react-select"
+import { useEffect, useState } from "react"
+import { getBerry } from "./GetBerry"
 
 function App() {
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    getBerry().then((res) => {
+      setData(res.sort((a, b) => a.label.localeCompare(b.label)))
+    })
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Select options={data} />
+    </>
+  )
 }
 
-export default App;
+export default App
